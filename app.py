@@ -14,11 +14,10 @@ for PyTorch
 ''')
 
 
-@st.cache(allow_output_mutation=True)
-def create_list():
-    return []
+if 'layers' not in st.session_state:
+    st.session_state['layers'] = []
 
-layers = create_list()
+layers = st.session_state['layers']
 
 container = st.container()
 
