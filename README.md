@@ -1,7 +1,7 @@
 # Simple Conv2d, MaxPool2d Calculator
 for pytorch
 
-Link: https://teddylee777-pytorch-layer-calculator-app-87zpr8.streamlitapp.com/
+Link: https://bit.ly/conv2d-calc
 
 
 ![demo](./demo.gif)
