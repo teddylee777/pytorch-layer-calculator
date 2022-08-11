@@ -4,7 +4,7 @@ import math
 
 st.set_page_config(page_title='pytorch calculator', layout='centered')
 
-ERR_MSG_NUMBER = '숫자만 입력 가능하고, 값을 비워두면 안됩니다.'
+ERR_MSG_NUMBER = 'Only NUMBERs are allowed as an input and it cannot be omitted.'
 
 st.write('''
 
