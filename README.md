@@ -6,4 +6,4 @@ Link: https://bit.ly/torch-calc
 
 ![demo](./demo.gif)
 
-@made by streamlit
+@made with streamlit
