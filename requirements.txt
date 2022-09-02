@@ -9,7 +9,6 @@ beautifulsoup4==4.11.1
 bleach==5.0.1
 blinker==1.5
 cachetools==5.2.0
-certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
 cffi==1.15.1
 charset-normalizer==2.1.0
 click==8.1.3
