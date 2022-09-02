@@ -198,8 +198,6 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 
-
-
 anlytcs_code = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -207,7 +205,10 @@ anlytcs_code = """<script async src="https://www.googletagmanager.com/gtag/js?id
   gtag('js', new Date());
 
   gtag('config', 'G-X4423L75Z6');
-</script>"""
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
+     crossorigin="anonymous"></script>
+"""
 
 # Fetch the path of the index.html file
 path_ind = os.path.dirname(st.__file__)+'/static/index.html'
