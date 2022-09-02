@@ -1,3 +1,4 @@
+from turtle import onclick
 import streamlit as st
 import math
 
@@ -17,16 +18,38 @@ for PyTorch
 if 'layers' not in st.session_state:
     st.session_state['layers'] = []
 
+if 'action' not in st.session_state:
+    st.session_state['action'] = []
+
 layers = st.session_state['layers']
+
+image_label = st.empty()
+image_section = st.empty()
+
+main_tab = st.empty()
 
 container = st.container()
 
-st.write('''
+def btn2_onclick():
+    if len(layers) > 0:
+        layers.pop(len(layers)-1)
+        update_container()
+
+
+with st.sidebar:
+    # btn1, btn2 = st.columns(2)
+    st.write('## 💡 Clear Everything')
+    st.button('Clear', on_click=lambda: layers.clear(), )
+    st.write('## ❌ Undo Action')
+    st.button('Undo', on_click=btn2_onclick)
+
+
+image_label.write('''
 ----
 **Image input**
 ''')
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = image_section.columns(3)
 img_width = col1.text_input(label="width", value="224")
 img_height = col2.text_input(label="height", value="224")
 img_channel = col3.text_input(label="channel", value="3")
@@ -38,7 +61,8 @@ out_img_channel = img_channel
 def update_container():
     with container:
         st.write('''
-        **Output**
+        ----
+        **📌 Output**
         ''')
         h1, h2, h3, h4, h5 = st.columns(5)
         h1.write('**layer**')
@@ -57,7 +81,7 @@ def update_container():
 
         w, h, c = calculate_output()
         st.write(f'====================================================')
-        st.write(f'**output(channel, height, width): ({c}, {h}, {w})**')
+        st.write(f'**🔆 output(channel, height, width): ({c}, {h}, {w})**')
 
 
 def calculate_conv2d_output_size(image_size, kernel_size=3, stride=1, padding=0):
@@ -68,6 +92,7 @@ def calculate_maxpool2d_output_size(image_size, kernel_size=2, stride=2, padding
 
 def calculate_output():
     width, height, channel = int(img_width), int(img_height), int(img_channel)
+    global_out_channel = channel
     for l in layers:
         if l['layer'] == 'Conv2d':
             out_channel = l['out_channel']
@@ -77,22 +102,35 @@ def calculate_output():
             width = calculate_conv2d_output_size(width, kernel_size, stride, padding)
             height = calculate_conv2d_output_size(height, kernel_size, stride, padding)
             channel = out_channel
+            global_out_channel = channel
         elif l['layer'] == 'MaxPool2d':
             kernel_size = l['kernel_size']
             stride = l['stride']
             padding = l['padding']
             width = calculate_maxpool2d_output_size(width, kernel_size, stride, padding)
             height = calculate_maxpool2d_output_size(height, kernel_size, stride, padding)
-            channel = out_channel
+            channel = global_out_channel
     return width, height, channel
 
 
-st.write('''
-----
-**Conv2d**
+tab1, tab2 = main_tab.tabs(["Conv2d", "MaxPool2d"])
+
+tab1.subheader("Conv2d")
+tab1.write('''
+```python
+torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0)
+```
+[Go to Document](https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html)
+''')
+tab2.subheader("MaxPool2d")
+tab2.write('''
+```python
+torch.nn.MaxPool2d(kernel_size, stride=None, padding=0)
+```
+[Go to Document](https://pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html?highlight=maxpool2d#torch.nn.MaxPool2d)
 ''')
 
-conv_form = st.form(key='conv-form')
+conv_form = tab1.form(key='conv-form')
 
 conv_col1, conv_col2, conv_col3, conv_col4 = conv_form.columns(4)
 conv_input1 = conv_col1.text_input(label="out_channel", value="")
@@ -100,7 +138,7 @@ conv_input2 = conv_col2.text_input(label="kernel_size", value="3")
 conv_input3 = conv_col3.text_input(label="stride(default=1)", value="1")
 conv_input4 = conv_col4.text_input(label="padding(default=0)", value="0")
 
-conv_submit = conv_form.form_submit_button('Add Conv2d Layer')
+conv_submit = conv_form.form_submit_button('✔️ Add Layer')
 
 if conv_submit:
     conv2d = dict()
@@ -117,19 +155,14 @@ if conv_submit:
         update_container()
 
 
-st.write('''
-----
-**MaxPool2d**
-''')
-
-mp2d_form = st.form(key='maxpool2d-form')
+mp2d_form = tab2.form(key='maxpool2d-form')
 
 mp_col1, mp_col2, mp_col3 = mp2d_form.columns(3)
 mp_input1 = mp_col1.text_input(label="kernel_size", value="2", key='mp_col1')
 mp_input2 = mp_col2.text_input(label="stride", value="2", key='mp_col2')
 mp_input3 = mp_col3.text_input(label="padding(default=0)", value="0", key='mp_col3')
 
-mp2d_submit = mp2d_form.form_submit_button('Add MaxPool2d Layer')
+mp2d_submit = mp2d_form.form_submit_button('✔️ Add Layer')
 
 if mp2d_submit:
     try:
@@ -148,13 +181,6 @@ if mp2d_submit:
 st.write('''
 ----
 ''')
-
-if st.button('Clear'):
-    layers.clear()
-
-
-
-
 
 
 
