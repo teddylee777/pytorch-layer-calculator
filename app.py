@@ -1,8 +1,22 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import math
 
 
 st.set_page_config(page_title='pytorch calculator', layout='centered')
+
+components.html('''
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X4423L75Z6');
+</script>
+''')
+
 
 ERR_MSG_NUMBER = 'Only NUMBERs are allowed as an input and it cannot be omitted.'
 
@@ -188,3 +202,4 @@ hide_streamlit_style = """
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
