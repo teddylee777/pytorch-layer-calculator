@@ -18,7 +18,8 @@ st.write('''
 
 # Conv2d, MaxPool2d Calculator
 for PyTorch
-[@teddylee777](https://github.com/teddylee777)
+
+[GitHub Repo](https://github.com/teddylee777/pytorch-layer-calculator)
 ''')
 
 
