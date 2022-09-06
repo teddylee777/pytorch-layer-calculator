@@ -10,7 +10,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-st.set_page_config(page_title='pytorch calculator', layout='centered')
+st.set_page_config(
+    page_title='Calculates image outputs for PyTorch', 
+    layout='centered',
+    page_icon="💡",
+)
 
 ERR_MSG_NUMBER = 'Only NUMBERs are allowed as an input and it cannot be omitted.'
 
@@ -25,6 +29,39 @@ for PyTorch
 
 if 'layers' not in st.session_state:
     st.session_state['layers'] = []
+
+if 'ga' not in st.session_state:
+    st.session_state['ga'] = True
+    anlytcs_code = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-X4423L75Z6');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
+        crossorigin="anonymous"></script>
+    """
+
+    # Fetch the path of the index.html file
+    path_ind = os.path.dirname(st.__file__)+'/static/index.html'
+
+    # Open the file
+    with open(path_ind, 'r') as index_file:
+        data=index_file.read()
+
+        # Check whether there is GA script
+        if len(re.findall('UA-', data))==0:
+
+            # Insert Script for Google Analytics
+            with open(path_ind, 'w') as index_file_f:
+
+                # The Google Analytics script should be pasted in the header of the HTML file
+                newdata=re.sub('<head>','<head>'+anlytcs_code,data)
+
+                index_file_f.write(newdata)
+
 
 if 'action' not in st.session_state:
     st.session_state['action'] = []
@@ -198,33 +235,3 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
-
-anlytcs_code = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-X4423L75Z6');
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
-     crossorigin="anonymous"></script>
-"""
-
-# Fetch the path of the index.html file
-path_ind = os.path.dirname(st.__file__)+'/static/index.html'
-
-# Open the file
-with open(path_ind, 'r') as index_file:
-    data=index_file.read()
-
-    # Check whether there is GA script
-    if len(re.findall('UA-', data))==0:
-
-        # Insert Script for Google Analytics
-        with open(path_ind, 'w') as index_file_f:
-
-            # The Google Analytics script should be pasted in the header of the HTML file
-            newdata=re.sub('<head>','<head>'+anlytcs_code,data)
-
-            index_file_f.write(newdata)
