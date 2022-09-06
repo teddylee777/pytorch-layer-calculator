@@ -132,6 +132,9 @@ def update_container():
 def calculate_conv2d_output_size(image_size, kernel_size=3, stride=1, padding=0):
     return math.floor((image_size - kernel_size + 2 * padding) / stride) + 1
 
+def calculate_conv2dtanspose_output_size(image_size, kernel_size=3, stride=1, padding=0):
+    return math.floor((image_size - 1) * stride - 2 * padding + (kernel_size -1) + 1)
+
 def calculate_maxpool2d_output_size(image_size, kernel_size=2, stride=2, padding=0):
     return math.floor((image_size + 2 * padding - (kernel_size -1) -1 ) / stride ) + 1
 
@@ -155,10 +158,17 @@ def calculate_output():
             width = calculate_maxpool2d_output_size(width, kernel_size, stride, padding)
             height = calculate_maxpool2d_output_size(height, kernel_size, stride, padding)
             channel = global_out_channel
+        elif l['layer'] == 'ConvTranspose2d':
+            kernel_size = l['kernel_size']
+            stride = l['stride']
+            padding = l['padding']
+            width = calculate_conv2dtanspose_output_size(width, kernel_size, stride, padding)
+            height = calculate_conv2dtanspose_output_size(height, kernel_size, stride, padding)
+            channel = global_out_channel
     return width, height, channel
 
 
-tab1, tab2 = main_tab.tabs(["Conv2d", "MaxPool2d"])
+tab1, tab2, tab3 = main_tab.tabs(["Conv2d", "MaxPool2d", 'ConvTranspose2d'])
 
 tab1.subheader("Conv2d")
 tab1.write('''
@@ -173,6 +183,14 @@ tab2.write('''
 torch.nn.MaxPool2d(kernel_size, stride=None, padding=0)
 ```
 [Go to Document](https://pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html?highlight=maxpool2d#torch.nn.MaxPool2d)
+''')
+
+tab3.subheader("ConvTranspose2d")
+tab3.write('''
+```python
+torch.nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride=1, padding=0)
+```
+[Go to Document](https://pytorch.org/docs/stable/generated/torch.nn.ConvTranspose2d.html)
 ''')
 
 conv_form = tab1.form(key='conv-form')
@@ -218,6 +236,31 @@ if mp2d_submit:
         mp2d['stride'] = int(mp_input2)
         mp2d['padding'] = int(mp_input3)
         layers.append(mp2d)
+        update_container()
+    except ValueError:
+        st.error(ERR_MSG_NUMBER)
+        update_container()
+
+
+conv2dtrans_form = tab3.form(key='conv2dtrans-form')
+
+cv2dt_col1, cv2dt_col2, cv2dt_col3, cv2dt_col4 = conv2dtrans_form.columns(4)
+cv2dt_input1 = cv2dt_col1.text_input(label="out_channel", value="", key='conv_col1')
+cv2dt_input2 = cv2dt_col2.text_input(label="kernel_size", value="3", key='conv_col2')
+cv2dt_input3 = cv2dt_col3.text_input(label="stride(default=1)", value="1", key='conv_col3')
+cv2dt_input4 = cv2dt_col4.text_input(label="padding(default=0)", value="0", key='conv_col4')
+
+cv2dt_submit = conv2dtrans_form.form_submit_button('✔️ Add Layer')
+
+if cv2dt_submit:
+    try:
+        cv2dt = dict()
+        cv2dt['layer'] = 'ConvTranspose2d'
+        cv2dt['out_channel'] = int(cv2dt_input1)
+        cv2dt['kernel_size'] = int(cv2dt_input2)
+        cv2dt['stride'] = int(cv2dt_input3)
+        cv2dt['padding'] = int(cv2dt_input4)
+        layers.append(cv2dt)
         update_container()
     except ValueError:
         st.error(ERR_MSG_NUMBER)
