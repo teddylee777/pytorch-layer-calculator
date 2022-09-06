@@ -58,6 +58,9 @@ if 'ga' not in st.session_state:
     <meta property="og:site_name" content="Image Shape Calculator for PyTorch" />
     
     <link rel="canonical" href="http://layer-calc.com">
+
+    <meta name="naver-site-verification" content="0ca255811d0d6736a44f330da090d9d0d6785635" />
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -271,10 +274,10 @@ if mp2d_submit:
 conv2dtrans_form = tab3.form(key='conv2dtrans-form')
 
 cv2dt_col1, cv2dt_col2, cv2dt_col3, cv2dt_col4 = conv2dtrans_form.columns(4)
-cv2dt_input1 = cv2dt_col1.text_input(label="out_channel", value="", key='conv_col1')
-cv2dt_input2 = cv2dt_col2.text_input(label="kernel_size", value="3", key='conv_col2')
-cv2dt_input3 = cv2dt_col3.text_input(label="stride(default=1)", value="1", key='conv_col3')
-cv2dt_input4 = cv2dt_col4.text_input(label="padding(default=0)", value="0", key='conv_col4')
+cv2dt_input1 = cv2dt_col1.text_input(label="out_channel", value="", key='cv2dt_col1')
+cv2dt_input2 = cv2dt_col2.text_input(label="kernel_size", value="3", key='cv2dt_col2')
+cv2dt_input3 = cv2dt_col3.text_input(label="stride(default=1)", value="1", key='cv2dt_col3')
+cv2dt_input4 = cv2dt_col4.text_input(label="padding(default=0)", value="0", key='cv2dt_col4')
 
 cv2dt_submit = conv2dtrans_form.form_submit_button('✔️ Add Layer')
 
