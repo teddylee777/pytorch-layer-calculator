@@ -20,7 +20,7 @@ ERR_MSG_NUMBER = 'Only NUMBERs are allowed as an input and it cannot be omitted.
 
 st.write('''
 
-# Conv2d, MaxPool2d Calculator
+# Conv2d, ConvTranspose2d, MaxPool2d Calculator
 for PyTorch
 
 [GitHub Repo](https://github.com/teddylee777/pytorch-layer-calculator)
@@ -32,7 +32,33 @@ if 'layers' not in st.session_state:
 
 if 'ga' not in st.session_state:
     st.session_state['ga'] = True
-    anlytcs_code = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
+    anlytcs_code = """<meta name="author" content="teddylee777">
+    <meta name="description" content="image outputs shape calculator for pytorch" />
+    
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="Image Shape Calculator for PyTorch">
+    <meta name="twitter:title" content="Image Shape Calculator for PyTorch">
+    <meta name="twitter:description" content="This is a easy image outputs shape calculator for Conv2d, ConvTranspose2d, MaxPool2d">
+
+    <!-- Twitter summary card with large image must be at least 280x150px -->
+    <meta name="twitter:image:src" content="https://raw.githubusercontent.com/teddylee777/pytorch-layer-calculator/master/assets/images/apple-touch-icon-iphone-retina-120x120.png">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/teddylee777/pytorch-layer-calculator/master/assets/images/apple-touch-icon-iphone-retina-120x120.png">
+    <meta property="twitter:url" content="http://layer-calc.com">
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="Image Shape Calculator for PyTorch">
+    <meta itemprop="description" content="This is a easy image outputs shape calculator for Conv2d, ConvTranspose2d, MaxPool2d"><meta itemprop="image" content="https://raw.githubusercontent.com/teddylee777/pytorch-layer-calculator/master/assets/images/apple-touch-icon-iphone-retina-120x120.png">
+    
+    <!-- Open Graph data -->
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://layer-calc.com" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/teddylee777/pytorch-layer-calculator/master/assets/images/apple-touch-icon-iphone-retina-120x120.png" />
+    <meta property="og:description" content="" />
+    <meta property="og:site_name" content="Image Shape Calculator for PyTorch" />
+    
+    <link rel="canonical" href="http://layer-calc.com">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X4423L75Z6"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
