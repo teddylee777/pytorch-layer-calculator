@@ -1,0 +1,16 @@
+# Development Dependencies
+# Updated from pyproject.toml - Development tools and testing dependencies
+
+# Include production dependencies
+-r requirements.txt
+
+# Testing framework and coverage
+pytest>=7.0
+pytest-cov>=4.0
+
+# Code formatting and linting
+black>=23.0
+ruff>=0.1.0
+
+# Type checking
+mypy>=1.0 
